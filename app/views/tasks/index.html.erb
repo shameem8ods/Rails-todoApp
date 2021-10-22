@@ -1,0 +1,65 @@
+<nav>
+  <div class="nav-wrapper">
+    <div class="container">
+        <%= link_to 'New Task', new_task_path ,class: "waves-effect waves-light btn popup" , remote: :true %>
+        <% if user_signed_in? %>
+        <%= link_to 'Log out', destroy_user_session_path, method: :delete ,class: "waves-effect waves-light btn red" %>
+        <% end %>
+    </div>
+  </div>
+</nav>
+
+<% flash.each do |name, msg| %>
+ <div class="flash-msg_wrap">
+    <div class="flash-msg">
+      <%= msg %>
+      <i class="far fa-times-circle" id="close-btn_flash" ></i>
+    </div>
+  </div>
+<% end %>
+
+<h1>Tasks</h1>
+<div class="container">
+  <div class="row">
+      <% @tasks.each do |task| %>
+      <% if task.user == current_user %>
+      <div class="col s4 ">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title"><%= task.name %></span>
+            <p><%= task.description %></p>
+          </div>
+          <div class="card-action">
+            <div>
+            <%= link_to 'Edit', edit_task_path(task),class:"popup", remote: true %>
+            <%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </div>
+            <div>
+             Due: <%= task.duedate %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+        <% end %>
+    </div>
+</div>
+
+
+<div id="popup_wrap">
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+  $('.popup').click(function(){
+    $('#popup_wrap').css("display","flex")
+
+  })
+  $('#close-btn_flash').click(function(){
+    $('.flash-msg_wrap').css("display","none")
+  })
+</script>

@@ -1,0 +1,33 @@
+
+
+<%= form_with(model: task, local: true) do |form| %>
+<i class="far fa-times-circle" id="close-btn" ></i>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.text_area :description %>
+    </div>
+
+    <div class="field">
+      <%= form.label :duedate %>
+      <%= form.date_select :duedate %>
+    </div>
+    <div class="field">
+      <%= form.number_field :user_id , value:current_user.id, type: :hidden %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit  id:"popup_wrap1" %>
+    </div>
+    <% end %>
+
+<script type="text/javascript">
+$('#close-btn').click(function(){
+  $('#popup_wrap').css("display","none");
+
+})
+</script>
